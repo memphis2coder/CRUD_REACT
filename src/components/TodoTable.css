@@ -1,0 +1,14 @@
+.todo-list {
+    margin-top: 2rem;
+}
+
+table {
+    border: 1px solid black;
+    margin: 0 auto;
+    width: 80%;
+    padding: 1rem;
+}
+
+.done {
+    text-decoration: line-through;
+}
