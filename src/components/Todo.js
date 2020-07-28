@@ -1,7 +1,6 @@
 import React from 'react'
 
 export default function Todo(props) {
-    
     return (
         <div>
             <li className="todo stack-small">
