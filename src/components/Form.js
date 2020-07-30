@@ -4,13 +4,13 @@ export default function Form(props) {
 
     const [name, setName] = useState('');
 
-    function handleSubmit(e) {
+    function handleSubmit(e) { // function to run after submit
         e.preventDefault();
         props.addTask(name);
         setName("");
     }
 
-    function handleChange(e) {
+    function handleChange(e) { // listen to value change
         setName(e.target.value)
     }
 

@@ -1,29 +1,31 @@
-import React from 'react';
+import React, {useState} from 'react';
 import './App.css';
 import Todo from './components/Todo';
 import Form from './components/Form';
 import FilterButton from './components/FilterButton';
 
-function App() {
+function App(props) {
 
-  const todos = [ // array of todos
+  const [tasks, setTasks] = useState(props.tasks);
+
+  const task = [ // array of todos
     { id: "todo-0", name: "Eat", completed: true },
     { id: "todo-1", name: "Sleep", completed: false },
     { id: "todo-2", name: "Repeat", completed: false }
   ];
 
-  const todosList = todos.map(todo => ( // mapping through the todos array
+  const todosList = task.map(task => ( // mapping through the todos array
       <Todo 
-        key={todo.id} 
-        id={todo.id} 
-        name={todo.name} 
-        completed={todo.completed}
+        key={task.id} 
+        id={task.id} 
+        name={task.name} 
+        completed={task.completed}
       />
     )
   );
   
-  function addTask(task) { // callback prop
-    alert(task);
+  function addTask(name) { // callback prop
+    alert(name);
   };
 
   return (
