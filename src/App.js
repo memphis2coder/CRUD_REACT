@@ -3,42 +3,83 @@ import './App.css';
 import Todo from './components/Todo';
 import Form from './components/Form';
 import FilterButton from './components/FilterButton';
+import {nanoid} from 'nanoid';
 
 function App(props) {
 
-  const [tasks, setTasks] = useState(props.tasks);
+  const [todos, setTodos] = useState([]);
 
-  const task = [ // array of todos
-    { id: "todo-0", name: "Eat", completed: true },
-    { id: "todo-1", name: "Sleep", completed: false },
-    { id: "todo-2", name: "Repeat", completed: false }
-  ];
-
-  const todosList = task.map(task => ( // mapping through the todos array
+  const todosList = todos.map(todo => ( // mapping through the todos array
       <Todo 
-        key={task.id} 
-        id={task.id} 
-        name={task.name} 
-        completed={task.completed}
+        key={todo.id} 
+        id={todo.id} 
+        name={todo.name} 
+        completed={todo.completed}
+        toggleTodoCompleted={toggleTodoCompleted}
+        deleteTodo={deleteTodo}
+        editTodo={editTodo}
       />
     )
   );
-  
-  function addTask(name) { // callback prop
-    alert(name);
+  // function to add a new todo
+  function addTask(todo) { // callback prop
+    const newTodo = { 
+      id: "todo-" + nanoid(), 
+      name: todo, 
+      completed: false
+    };
+    setTodos([newTodo, ...todos ]);
   };
+
+  // function to count how many todos are left
+  const taskNoun = todosList.length === 1 ? 'task' : 'tasks'
+  const taskRemaining = `${todosList.length} ${taskNoun} remaining`;
+  
+  // add text decoration when todo is complete
+  function toggleTodoCompleted(id) {
+    const updateTodos = todos.map(todo => {
+      if (id === todo.id) {
+        return {
+          ...todo, completed: !todo.completed
+        }
+      }
+      return todo;
+    });
+    setTodos(updateTodos);
+    console.log(todos[0])
+  };
+
+  // delete a todo function
+  function deleteTodo(id) {
+    const remainingTodos = todos.filter(todo => id !== todo.id);
+    setTodos(remainingTodos);
+  };
+
+  // edit a todo function
+  function editTodo(id, newEdit) {
+    const editedTodosList = todos.map(todo => {
+      if (id === todo.id) {
+        return {
+          ...todos, 
+          name: newEdit
+        }
+      }
+      return todo;
+    });
+    setTodos(editedTodosList)
+  }
 
   return (
     <div className="todoapp stack-large">
       <h1>TodoMatic</h1>
-      <Form addTask={addTask}/>
+      <Form addTask={addTask}/> {/* addTask function */}
       <div className="filters btn-group stack-exception">
         <FilterButton />
         <FilterButton />
         <FilterButton />
       </div>
       <h2 id="list-heading">
-        3 tasks remaining
+        {taskRemaining}
       </h2>
       <ul
         role="list"

@@ -2,16 +2,16 @@ import React, {useState} from 'react'
 
 export default function Form(props) {
 
-    const [name, setName] = useState('');
+    const [newInput, setNewInput] = useState('');
 
     function handleSubmit(e) { // function to run after submit
         e.preventDefault();
-        props.addTask(name);
-        setName("");
+        props.addTask(newInput);
+        setNewInput("");
     }
 
     function handleChange(e) { // listen to value change
-        setName(e.target.value)
+        setNewInput(e.target.value)
     }
 
     return (
@@ -23,7 +23,7 @@ export default function Form(props) {
                     </label>
                 </h2>
                     <input
-                    value={name}
+                    value={newInput}
                     onChange={handleChange}
                     type="text"
                     id="new-todo-input"
