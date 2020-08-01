@@ -5,9 +5,16 @@ import Form from './components/Form';
 import FilterButton from './components/FilterButton';
 import {nanoid} from 'nanoid';
 
+const FILTER_MAP = {
+  All: () => true,
+  Active: task => !task.completed,
+  Completed: task => task.completed
+};
+
 function App(props) {
 
-  const [todos, setTodos] = useState([]);
+  const [todos, setTodos] = useState([]); // the todos list
+  const [filter, setFilter] = useState('ALL') // filter buttons
 
   const todosList = todos.map(todo => ( // mapping through the todos array
       <Todo 
